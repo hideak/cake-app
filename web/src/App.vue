@@ -1,30 +1,36 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <RouterView v-slot="{ Component }">
+    <Transition name="slide-fade" mode="out-in">
+      <component :is="Component" />
+    </Transition>
+  </RouterView>
+  <div id="modal"></div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent, provide } from 'vue';
+import { dbConnect } from '@/util/idb';
+import DatabaseConnection from './model/interface/database-connection.interface';
 
-#nav {
-  padding: 30px;
+export default defineComponent({
+  name: 'App',
+  setup() {
+    // Connecting to the Indexed DB
+    const dbConnection: DatabaseConnection = {
+      dbName: 'StudioDB',
+      dbVersion: 1
+    };
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+    dbConnect(dbConnection).then();
+    provide('dbConnection', dbConnection);
   }
+});
+</script>
+
+<style lang="scss">
+@import '@/styles/global.scss';
+
+div#app {
+  height: 100%;
 }
 </style>

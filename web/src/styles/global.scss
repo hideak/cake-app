@@ -1,0 +1,37 @@
+@import '@/styles/fonts';
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+:root {
+  font-family: $app-font-family;
+  height: 100%;
+}
+
+div {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  color: $app-font-color;
+  background-color: $app-background-color;
+
+  overscroll-behavior-y: contain;
+
+  .slide-fade-enter-active {
+    transition: all 0.15s ease;
+  }
+
+  .slide-fade-leave-active {
+    transition: all 0.15s ease;
+  }
+
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
